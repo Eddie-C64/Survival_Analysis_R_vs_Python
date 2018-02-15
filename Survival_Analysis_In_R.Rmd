@@ -1,0 +1,32 @@
+---
+title: "Survival_Analysis_in_R"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+cat("\014")
+library(survival)
+library(dplyr)
+library(OIsurv) # Aumatically loads KMsurv
+library(ranger)
+library(ggplot2)
+
+
+draft_df = read.csv('nfl_survival_analysis_data.csv')
+```
+
+## R Markdown
+```{r Declare the Surv Object}
+cat("\014")
+head(draft_df)
+y_bmt = Surv(draft_df$Duration, draft_df$Retired)
+fit1_bmt <- survfit(y_bmt ~ 1)
+```
+
+```{r Display Graph}
+
+plot(fit1_bmt,
+     main = 'Kaplan Meyer Plot with confidence bands')
+
+legend(1000, 0.99, legend = c('K-M survival estimate'))
+```
